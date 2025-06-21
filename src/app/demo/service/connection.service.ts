@@ -12,7 +12,7 @@ export class ConnectionService {
 
     // if deployed online with hosting
     // public domain: string = 'https://idm-backend.chmsu.edu.ph';
-    public domain: string = 'https://backend-idm.onrender.com/';
+    public domain: string = 'https://backend-idm.onrender.com';
     //
     // if deployed online without hosting
     // public domain: string = '';
