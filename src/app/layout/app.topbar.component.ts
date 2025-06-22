@@ -278,7 +278,7 @@ export class AppTopBarComponent implements OnInit {
                     this.loading = false;
                     this.notifications = data.notifications;
                     // Count only unread notifications
-                    this.notificationCount = data.notifications.filter(notification => !notification.isRead).length;
+                    this.notificationCount = data.notifications.filter(notification => this.id === notification?.to?.id && !notification?.isRead).length;
                     this.cdr.detectChanges();
                 });
     }
@@ -452,9 +452,11 @@ export class AppTopBarComponent implements OnInit {
     onNotificationClick(notification: any) {
         this.selectedNotification = notification;
         this.notificationDialogVisible = true;
-        console.log(notification);
+        console.log({ id : this.id});
+        console.log( notification.reciepient );
+        console.log({ notification });
 
-        if( this.id === notification.reciepient){
+        if( this.id === notification?.to?.id){
             if (!notification.isRead) {
                 this.notif
                     .fetch(

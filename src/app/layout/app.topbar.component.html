@@ -72,48 +72,48 @@
                     @if(role === 'admin'){
                     <tr
                         [ngClass]="{
-                            'bg-green-100': !notification.isRead,
-                            'bg-blue-100': notification.isRead
+                            'bg-green-100': !notification?.isRead,
+                            'bg-blue-100': notification?.isRead
                         }"
                         (click)="onNotificationClick(notification)"
                         style="cursor: pointer"
                     >
-                    <td>{{ notification.goalDetails.goals }}</td>
-                    <td>{{ notification.objectiveDetails.strategic_objective }}</td>
+                    <td>{{ notification?.goalDetails.goals }}</td>
+                    <td>{{ notification?.objectiveDetails.strategic_objective }}</td>
 
                         <td>
                             {{
-                                notification.from.department
+                                notification?.from.department
                                     | abbreviateDepartment
                             }}
                         </td>
-                        <td>{{ notification.from.username }}</td>
-                        <td>{{ notification.metadata.remarks }}</td>
-                        <td>{{ notification.to.username }}</td>
-                        <td>{{ notification.isRead ? 'Yes' : 'No' }}</td>
+                        <td>{{ notification?.from.username }}</td>
+                        <td>{{ notification?.metadata.remarks }}</td>
+                        <td>{{ notification?.to.username }}</td>
+                        <td>{{ notification?.isRead ? 'Yes' : 'No' }}</td>
                     </tr>
 
-                    } @else if (id !== notification.userId) {
+                    } @else if (id !== notification?.userId) {
                     <tr
                         [ngClass]="{
-                            'bg-green-100': !notification.isRead,
-                            'bg-blue-100': notification.isRead
+                            'bg-green-100': !notification?.isRead,
+                            'bg-blue-100': notification?.isRead
                         }"
                         (click)="onNotificationClick(notification)"
                         style="cursor: pointer"
                     >
-                    <td>{{ notification.goalDetails.goals }}</td>
-                    <td>{{ notification.objectiveDetails.strategic_objective }}</td>
+                    <td>{{ notification?.goalDetails.goals }}</td>
+                    <td>{{ notification?.objectiveDetails.strategic_objective }}</td>
                         <td>
                             {{
-                                notification.from.department
+                                notification?.from.department
                                     | abbreviateDepartment
                             }}
                         </td>
-                        <td>{{ notification.from.username }}</td>
-                        <td>{{ notification.metadata.remarks }}</td>
-                        <td>{{ notification.to.username }}</td>
-                        <td>{{ notification.isRead ? 'Yes' : 'No' }}</td>
+                        <td>{{ notification?.from.username }}</td>
+                        <td>{{ notification?.metadata.remarks }}</td>
+                        <td>{{ notification?.to?.username }}</td>
+                        <td>{{ notification?.isRead ? 'Yes' : 'No' }}</td>
                     </tr>
 
                     }
@@ -323,6 +323,7 @@
 >
     <p>{{ selectedNotification?.message }}</p>
     <p><strong>From:</strong> {{ selectedNotification?.from?.firstname }}</p>
+    <p><strong>Message:</strong> {{ selectedNotification?.metadata?.remarks }}</p>
     <ng-template pTemplate="footer">
         <button
             pButton
