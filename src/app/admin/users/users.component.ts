@@ -174,6 +174,9 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
 
     updateUserExecution(form) {
+
+
+
         let data = {
             id: this.updateUserId,
             username: form.value.username,
@@ -285,7 +288,10 @@ export class UsersComponent implements OnInit, OnDestroy {
         return '';
     }
 
-    updateUser(data) {
+    updateUser(data : any) {
+
+        console.log({ updateUser :data });
+
         this.parentUpdateUser = {
             updateUser: 'updateUser',
             updateUserCard: true,

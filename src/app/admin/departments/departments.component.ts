@@ -42,7 +42,7 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.getDepartments();
-        this.getAllUsers();
+        // this.getAllUsers();
 
         this.cols = [
             { field: 'department', header: 'Department' },
@@ -61,7 +61,8 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
             .fetch('get', 'users', 'getAllUsersAdminDepartments')
             .pipe(takeUntil(this.getdepartmenttSubscription))
             .subscribe((data: any) => {
-                this.allUsers = data.data[0] || [];
+                console.log(data);
+                this.allUsers = data?.users || [];
                 console.log(this.allUsers);
             });
     }
@@ -78,11 +79,13 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     }
 
     addDept() {
+        this.getAllUsers();
         this.cardCrudDialog = true;
         this.updatingDept = false;
     }
 
     updateDept(dept: any) {
+        this.getAllUsers();
         console.log({ updateDept: dept });
 
         this.departmentName = dept.department;
@@ -242,7 +245,10 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
             });
         }
         this.loading = true;
-
+        console.log({
+            departmentName: this.departmentName,
+            department_head: this.department_head,
+        });
         this.department
             .getRoute('post', 'department', 'addDepartment', {
                 department: {

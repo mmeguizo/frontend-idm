@@ -104,87 +104,100 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
         console.log({ ngOnChanges: data });
 
-        if (data && (!data.vice_president_id || !data.vice_president_name)) {
-            this.isVicePresident = false;
-            this.form.controls['vice_president'].setValue('');
-        }
-        if (data && (!data.director_id || !data.director_name)) {
-            this.isDirector = false;
-            this.form.controls['director'].setValue('');
-        }
+        if (data) {
+            // Handle vice president data
+            if (!data.vice_president_id || !data.vice_president_name) {
+                this.isVicePresident = false;
+                this.form.controls['vice_president'].setValue('');
+            }
+            
+            // Handle director data
+            if (!data.director_id || !data.director_name) {
+                this.isDirector = false;
+                this.form.controls['director'].setValue('');
+            }
 
-        if (
-            this.editNewUserEventFromParent &&
-            this.editNewUserEventFromParent.updateUser
-        ) {
-            this.updateUserCard =
-                this.editNewUserEventFromParent.updateUserCard;
+            if (this.editNewUserEventFromParent && this.editNewUserEventFromParent.updateUser) {
+                this.updateUserCard =
+                    this.editNewUserEventFromParent.updateUserCard;
 
-            this.selectedDept = data.department;
-            this.selectedRole = data.role;
+                this.selectedDept = data.department;
+                this.selectedRole = data.role;
 
-            this.formGroupDemo.setValue({
-                selectDepartment: this.deptDropdownValue.find(
-                    (dept) => dept.code === data.department
-                ),
-            });
-            // if (data.role === 'director') {
-            //     this.isDirector = true;
-            //     this.isVicePresident = true;
-            //     selectedVp = this.selectVP.find(
-            //         (vp) => vp.id === data.vice_president_id
-            //     );
-            //     // this.form.controls['vice_president'].setValue('');
-            //     this.form.controls['director'].setValue(data.director);
-            // } else if (data.role === 'vice-president') {
-            //     this.isVicePresident = false;
-            //     this.isDirector = false;
-            //     this.form.controls['vice_president'].setValue(
-            //         data.vice_president
-            //     );
-            //     this.form.controls['director'].setValue('');
-            // } else {
-            //     this.isDirector = false;
-            //     this.isVicePresident = false;
-            //     this.form.controls['vice_president'].setValue('');
-            //     this.form.controls['director'].setValue('');
-            // }
+                // Replace the existing setValue code with this conditional check
+                if (data.department) {
+                    const departmentMatch = this.deptDropdownValue.find(
+                        (dept) => dept.code === data.department
+                    );
+                    if (departmentMatch) {
+                        this.formGroupDemo.setValue({
+                            selectDepartment: departmentMatch
+                        });
+                    } else {
+                        this.formGroupDemo.reset(); // Reset if no match found
+                    }
+                } else {
+                    this.formGroupDemo.reset(); // Reset if no department
+                }
+                // if (data.role === 'director') {
+                //     this.isDirector = true;
+                //     this.isVicePresident = true;
+                //     selectedVp = this.selectVP.find(
+                //         (vp) => vp.id === data.vice_president_id
+                //     );
+                //     // this.form.controls['vice_president'].setValue('');
+                //     this.form.controls['director'].setValue(data.director);
+                // } else if (data.role === 'vice-president') {
+                //     this.isVicePresident = false;
+                //     this.isDirector = false;
+                //     this.form.controls['vice_president'].setValue(
+                //         data.vice_president
+                //     );
+                //     this.form.controls['director'].setValue('');
+                // } else {
+                //     this.isDirector = false;
+                //     this.isVicePresident = false;
+                //     this.form.controls['vice_president'].setValue('');
+                //     this.form.controls['director'].setValue('');
+                // }
 
-            const rolesSelected = this.roleOptions.find(
-                (role) => role.code === data.role
-            );
+                const rolesSelected = this.roleOptions.find(
+                    (role) => role.code === data.role
+                );
 
-            this.formGroupCampus.setValue({
-                selectedCampus: this.deptDropdownCampusValue.find(
-                    (dept) => dept.code === data.campus
-                ),
-            });
+                this.formGroupCampus.setValue({
+                    selectedCampus: this.deptDropdownCampusValue.find(
+                        (dept) => dept.code === data.campus
+                    ),
+                });
 
-            const selectedDirector = this.selectDiretor.find(
-                (director) => director.id === data.director_id
-            );
+                // Find selected VP and director only if IDs exist
+                const selectedDirector = data.director_id ? 
+                    this.selectDiretor.find(director => director.id === data.director_id) : 
+                    null;
 
-            const selectedVp = this.selectVP.find(
-                (vp) => vp.id === data.vice_president_id
-            );
+                const selectedVp = data.vice_president_id ? 
+                    this.selectVP.find(vp => vp.id === data.vice_president_id) : 
+                    null;
+                
+                this.form.setValue({
+                    firstname: data.firstname ? data.firstname : 'tester',
+                    lastname: data.lastname ? data.lastname : '',
+                    username: data.username ? data.username : '',
+                    email: data.email ? data.email : '',
+                    department: data.department ? data.department : '',
+                    role: rolesSelected || '',
+                    vice_president: selectedVp || '',
+                    director: selectedDirector || '',
+                    office_head: '',
+                    campus: data.campus ? data.campus : '',
+                    password: '',
+                    confirm: '',
+                });
 
-            this.form.setValue({
-                firstname: data.firstname ? data.firstname : 'tester',
-                lastname: data.lastname ? data.lastname : '',
-                username: data.username ? data.username : '',
-                email: data.email ? data.email : '',
-                department: data.department ? data.department : '',
-                role: rolesSelected || '',
-                vice_president: selectedVp || '',
-                director: selectedDirector || '',
-                office_head: '',
-                campus: data.campus ? data.campus : '',
-                password: '',
-                confirm: '',
-            });
-
-            this.updateUserCard = true;
-            this.updateUserId = data.id;
+                this.updateUserCard = true;
+                this.updateUserId = data.id;
+            }
         }
     }
 
@@ -199,8 +212,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
             role: ['', [Validators.required]],
             password: ['', [Validators.required]],
             confirm: ['', [Validators.required]],
-            vice_president: ['', [Validators.required]],
-            director: ['', [Validators.required]],
+            vice_president: [''],  // Removed Validators.required
+            director: [''],  // Removed Validators.required
             office_head: ['', [Validators.required]],
         });
     }
@@ -250,18 +263,22 @@ export class EditUserComponent implements OnInit, OnDestroy {
             id: this.updateUserId,
             username: form.value.username,
             email: form.value.email,
-            department: this.formGroupDemo.value.selectDepartment.code,
-            department_id: this.formGroupDemo.value.selectDepartment.id,
-            campus: this.formGroupCampus.value.selectedCampus.name,
+            department: this.formGroupDemo.value.selectDepartment?.code || '',
+            department_id: this.formGroupDemo.value.selectDepartment?.id || '',
+            campus: this.formGroupCampus.value.selectedCampus?.name || '',
             role: form.value.role.code,
+            vice_president_id: '',
+            vice_president_name: '',
+            director_id: '',
+            director_name: ''
         };
 
-        if (form.value.vice_president.id) {
+        if (form.value.vice_president && form.value.vice_president.id) {
             data.vice_president_id = form.value.vice_president.id;
             data.vice_president_name = form.value.vice_president.fullname;
         }
 
-        if (form.value.director.id) {
+        if (form.value.director && form.value.director.id) {
             data.director_id = form.value.director.id;
             data.director_name = form.value.director.fullname;
         }

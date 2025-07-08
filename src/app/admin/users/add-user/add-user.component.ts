@@ -176,20 +176,36 @@ export class AddUserComponent implements OnInit, OnDestroy {
             lastname: form.value.lastname,
             username: form.value.username,
             email: form.value.email,
-            department: this.formGroupDemo.value.selectDepartment.code,
-            department_id: this.formGroupDemo.value.selectDepartment.id,
-            campus: this.formGroupCampus.value.selectedCampus.name,
             password: form.value.password.trim(),
             confirm: form.value.confirm.trim(),
             role: form.value.role?.code || '',
-            vice_president_id: this.formGroupVP?.value?.selectVP?.id || '',
-            vice_president_name:
-                this.formGroupVP?.value?.selectVP?.fullname || '',
-            director_id:
-                this.formGroupDirector?.value?.selectDirector?.id || '',
-            director_name:
-                this.formGroupDirector.value?.selectDirector?.fullname || '',
+            campus: this.formGroupCampus.value?.selectedCampus?.name || '',
         };
+    
+        // Add optional fields only if they exist
+        if (this.formGroupDemo.value?.selectDepartment?.code) {
+            data['department'] = this.formGroupDemo.value.selectDepartment.code;
+        }
+        
+        if (this.formGroupDemo.value?.selectDepartment?.id) {
+            data['department_id'] = this.formGroupDemo.value.selectDepartment.id;
+        }
+        
+        if (this.formGroupVP?.value?.selectVP?.id) {
+            data['vice_president_id'] = this.formGroupVP.value.selectVP.id;
+        }
+        
+        if (this.formGroupVP?.value?.selectVP?.fullname) {
+            data['vice_president_name'] = this.formGroupVP.value.selectVP.fullname;
+        }
+        
+        if (this.formGroupDirector?.value?.selectDirector?.id) {
+            data['director_id'] = this.formGroupDirector.value.selectDirector.id;
+        }
+        
+        if (this.formGroupDirector?.value?.selectDirector?.fullname) {
+            data['director_name'] = this.formGroupDirector.value.selectDirector.fullname;
+        }
 
         if (
             form.value.firstname == null ||
