@@ -85,7 +85,6 @@ export class ViewFileHistoryComponent implements OnInit, OnDestroy {
                 .pipe(takeUntil(this.getGoalSubscription))
                 .subscribe((data: any) => {
                     this.AllObjectivesHistoryFiles = data.data;
-
                     this.loading = false;
                 });
             return true;

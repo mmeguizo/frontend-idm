@@ -8,6 +8,8 @@ import {
     EventEmitter,
     ChangeDetectorRef,
     ChangeDetectionStrategy,
+    ViewChild,
+    ElementRef,
 } from '@angular/core';
 import {
     Subject,
@@ -23,6 +25,7 @@ import { BaseService } from 'src/app/demo/service/base.service';
 import { FileService } from 'src/app/demo/service/file.service';
 import { RouteService } from 'src/app/demo/service/route.service';
 import { getIcon, getFrequencyKeys } from 'src/app/utlis/file-utils';
+import { Table } from 'primeng/table';
 
 @Component({
     selector: 'app-view-file-history',
@@ -32,6 +35,7 @@ import { getIcon, getFrequencyKeys } from 'src/app/utlis/file-utils';
 })
 export class ViewFileHistoryComponent implements OnInit, OnDestroy {
     private getGoalSubscription = new Subject<void>(); // Subscription for getting goal
+    @ViewChild('filter') filter!: ElementRef;
 
     @Input() viewFilesHistory: string;
     viewObjectiveFileHistoryDialogCard: boolean = false;
@@ -76,6 +80,7 @@ export class ViewFileHistoryComponent implements OnInit, OnDestroy {
     ): Promise<boolean> {
         try {
             this.loading = true;
+            this.changeDetectorRef.markForCheck(); // Add this line to trigger change detection
             this.route
                 .getRoute(
                     'get',
@@ -86,11 +91,24 @@ export class ViewFileHistoryComponent implements OnInit, OnDestroy {
                 .subscribe((data: any) => {
                     this.AllObjectivesHistoryFiles = data.data;
                     this.loading = false;
+                    this.changeDetectorRef.markForCheck(); // Add this line to trigger change detection
                 });
             return true;
         } catch (error) {
             console.error(error);
             return false;
         }
+    }
+
+    // Add these missing methods
+    clear(table: Table) {
+        table.clear();
+        if (this.filter) {
+            this.filter.nativeElement.value = '';
+        }
+    }
+
+    onGlobalFilter(table: Table, event: Event) {
+        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
 }
