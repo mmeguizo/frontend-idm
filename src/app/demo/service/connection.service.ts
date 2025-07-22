@@ -8,11 +8,11 @@ export class ConnectionService {
     // public domain: string = 'https://unduly-enjoyed-parrot.ngrok-free.app/';
 
     //localhost dev
-    // public domain: string = 'http://localhost:3002';
+    public domain: string = 'http://localhost:3002';
 
     // if deployed online with hosting
     // public domain: string = 'https://idm-backend.chmsu.edu.ph';
-    public domain: string = 'https://backend-idm.onrender.com';
+    // public domain: string = 'https://backend-idm.onrender.com';
     //
     // if deployed online without hosting
     // public domain: string = '';

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrintingQomComponent } from './printing-qom.component';
+import { PrintQomComponent } from './print-qom.component';
 
 describe('PrintingQomComponent', () => {
-  let component: PrintingQomComponent;
-  let fixture: ComponentFixture<PrintingQomComponent>;
+  let component: PrintQomComponent;
+  let fixture: ComponentFixture<PrintQomComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PrintingQomComponent]
+      imports: [PrintQomComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(PrintingQomComponent);
+    fixture = TestBed.createComponent(PrintQomComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

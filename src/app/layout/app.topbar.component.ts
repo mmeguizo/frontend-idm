@@ -177,7 +177,7 @@ export class AppTopBarComponent implements OnInit {
     ) {
         this.name = this.auth.getTokenUsername() || '';
         this.profile_pic = this.auth.getUserProfilePic() || 'no-photo.png';
-        this.notificationCount = 2;
+        this.notificationCount = 0;
     }
 
     private pollingInterval: any;

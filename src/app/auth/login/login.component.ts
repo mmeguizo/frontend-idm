@@ -72,7 +72,7 @@ export class LoginComponent implements OnDestroy {
                     this.msg.add({
                         severity: 'error',
                         summary: 'Error',
-                        detail: 'Login Failed',
+                        detail: 'Login Failed ' + data.message,
                     });
                 }
             });

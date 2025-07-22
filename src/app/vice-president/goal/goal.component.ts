@@ -98,7 +98,7 @@ export class GoalComponent implements OnInit, OnDestroy {
         console.log({ receivedPrintQOMObjectiveTableEvent: event });
         const { header, data, printObjectiveTable } = event;
         this.parentPrintQom = {
-            printObjectiveTable: printObjectiveTable,
+            printQOMObjectiveTable: printObjectiveTable,  // Changed from printObjectiveTable to printQOMObjectiveTable
             data: data,
             header: header,
         };

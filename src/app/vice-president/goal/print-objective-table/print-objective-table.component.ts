@@ -99,6 +99,14 @@ export class PrintObjectiveTableComponent implements OnInit {
               <title>Document</title>
             </head>
             <style>
+
+          @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
+
             * {
             margin: 0;
             padding: 0;
@@ -106,6 +114,8 @@ export class PrintObjectiveTableComponent implements OnInit {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 12px;
           }
+
+    
 
           body {
             width: 11in;
@@ -428,6 +438,13 @@ export class PrintObjectiveTableComponent implements OnInit {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
 }
+
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
 
 body {
   /* padding: 0.25in; */

@@ -11,6 +11,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormBuilder, Validators } from '@angular/forms';
 import { DepartmentService } from 'src/app/demo/service/department.service';
 import { UserService } from 'src/app/demo/service/user.service';
+import { switchMap } from 'rxjs';
 
 @Component({
     selector: 'app-departments',
@@ -85,26 +86,28 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
     }
 
     updateDept(dept: any) {
-        this.getAllUsers();
-        console.log({ updateDept: dept });
-
-        this.departmentName = dept.department;
-        this.updateDepartmentId = dept.id;
-        this.updatingDept = true;
-        this.cardCrudDialog = true;
-
-        // this.department_head = this.allUsers.filter(
-        //     (user) => user.code === dept.user_id
-        // )[0].name;
-
-        // console.log(this.department_head);
-
-        const matchedUser = this.allUsers.find(
-            (user) => user.code === dept.user_id
-        );
-        if (matchedUser) {
-            this.department_head = matchedUser;
-        }
+        // First get all users, then set the department head
+        this.user
+            .fetch('get', 'users', 'getAllUsersAdminDepartments')
+            .pipe(takeUntil(this.getdepartmenttSubscription))
+            .subscribe((data: any) => {
+                console.log(data);
+                this.allUsers = data?.users || [];
+                console.log(this.allUsers);
+                
+                // Now set the department data
+                this.departmentName = dept.department;
+                this.updateDepartmentId = dept.id;
+                this.updatingDept = true;
+                this.cardCrudDialog = true;
+        
+                const matchedUser = this.allUsers.find(
+                    (user) => user.code === dept.user_id
+                );
+                if (matchedUser) {
+                    this.department_head = matchedUser;
+                }
+            });
     }
 
     updateDepartmentExec() {
@@ -237,13 +240,13 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
                 detail: 'Please provide Department Name',
             });
         }
-        if (this.department_head == '') {
-            return this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Please provide Department head',
-            });
-        }
+        // if (this.department_head == '') {
+        //     return this.messageService.add({
+        //         severity: 'error',
+        //         summary: 'Error',
+        //         detail: 'Please provide Department head',
+        //     });
+        // }
         this.loading = true;
         console.log({
             departmentName: this.departmentName,
@@ -262,12 +265,13 @@ export class DepartmentsComponent implements OnInit, OnDestroy {
                 this.getDepartments();
                 this.loading = false;
                 this.messageService.add({
-                    severity: 'success  ',
+                    severity: data.success ? 'success' : 'error',
                     summary: 'Done',
                     detail: data.message,
                     life: 5000,
                 });
                 this.departmentName = '';
+                this.department_head = null;
             });
     }
 

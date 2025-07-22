@@ -57,10 +57,10 @@
     [getObjective]="parentEditObjective"
     (childUpdateObjective)="receivedUpdateObjective($event)"
 >
-    <app-printing-qom [printQOMFile]="parentPrintQom"></app-printing-qom>
 </app-edit-objective>
 <app-print-objective-table [printFile]="parentPrintFile">
 </app-print-objective-table>
+<app-print-qom [printQOMFile]="parentPrintQom"></app-print-qom>
 <app-remarks
     [remarksFromGoalParent]="parentRemarks"
     (childRemarksEvent)="receivedRemarksEvent($event)"

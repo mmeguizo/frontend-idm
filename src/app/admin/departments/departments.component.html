@@ -97,9 +97,6 @@
                         <td>
                             {{ dept.department | titlecase }}
                         </td>
-                        <!-- <td>
-                            {{ dept.status | titlecase }}
-                        </td> -->
                         <td>
                             <span
                                 (click)="changeDeptStatus($event, dept.id)"
@@ -175,7 +172,7 @@
     [header]="!updatingDept ? 'Add Department' : 'Update '"
     [(visible)]="cardCrudDialog"
     [style]="{ width: '25rem' }"
-    (onHide)="cardCrudDialog = false; departmentName = ''; department_head = ''"
+    (onHide)="cardCrudDialog = false; departmentName = ''; department_head = null"
 >
     <div class="flex align-items-center gap-3 mb-5">
         <input

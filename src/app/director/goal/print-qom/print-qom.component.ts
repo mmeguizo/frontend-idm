@@ -98,6 +98,14 @@ export class PrintQomComponent implements OnInit {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
 }
+    /* Add this to force background colors to print */
+  @media print {
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+  }
 
 body {
   /* padding: 0.25in; */
